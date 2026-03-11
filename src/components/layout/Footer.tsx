@@ -3,55 +3,33 @@ import { siteContent } from "@/data/siteContent";
 
 export function Footer() {
   return (
-    <footer className="border-t border-gray-200 bg-gray-50">
-      <div className="max-w-6xl mx-auto px-6 py-12">
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
+    <footer className="border-t border-border">
+      <div className="max-w-[1200px] mx-auto px-6 py-12">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
           {/* Brand */}
-          <div>
-            <div className="flex items-center gap-2 mb-3">
-              <div className="w-7 h-7 rounded-md bg-black flex items-center justify-center text-white text-xs font-bold">
-                a.
-              </div>
-              <span className="font-semibold text-gray-900">Async Agency</span>
+          <div className="flex items-center gap-2.5">
+            <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-accent to-cyan flex items-center justify-center text-white text-[0.6rem] font-bold font-mono">
+              a.
             </div>
-            <p className="text-sm text-gray-500 leading-relaxed">
-              Automation & AI Systems.
-              <br />
-              Systemes automatises pour votre croissance.
-            </p>
+            <span className="font-semibold text-text text-sm">Async Agency</span>
           </div>
 
-          {/* Navigation */}
-          <div>
-            <h4 className="text-sm font-semibold text-gray-900 mb-3">Navigation</h4>
-            <div className="flex flex-col gap-2">
-              {siteContent.footer.links.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className="text-sm text-gray-500 hover:text-gray-900 transition-colors"
-                >
-                  {link.label}
-                </Link>
-              ))}
-            </div>
+          {/* Links */}
+          <div className="flex flex-wrap gap-6">
+            {siteContent.footer.links.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="text-[0.8rem] text-text-muted hover:text-accent-l transition-colors"
+              >
+                {link.label}
+              </Link>
+            ))}
           </div>
 
-          {/* Contact */}
-          <div>
-            <h4 className="text-sm font-semibold text-gray-900 mb-3">Contact</h4>
-            <p className="text-sm text-gray-500">
-              {siteContent.footer.contact.email}
-            </p>
-            <p className="text-sm text-gray-400 mt-4">
-              Reponse sous 24h.
-            </p>
-          </div>
-        </div>
-
-        <div className="mt-10 pt-6 border-t border-gray-200 text-center">
-          <p className="text-xs text-gray-400">
-            &copy; {new Date().getFullYear()} Async Agency. Tous droits reserves.
+          {/* Copy */}
+          <p className="text-xs text-text-muted font-mono">
+            © {new Date().getFullYear()} Async Agency
           </p>
         </div>
       </div>

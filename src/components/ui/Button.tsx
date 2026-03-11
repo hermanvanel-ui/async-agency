@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 interface ButtonProps {
   href: string;
   children: React.ReactNode;
-  variant?: "primary" | "secondary";
+  variant?: "primary" | "ghost";
   className?: string;
 }
 
@@ -13,9 +13,11 @@ export function Button({ href, children, variant = "primary", className }: Butto
     <Link
       href={href}
       className={cn(
-        "inline-flex items-center justify-center px-6 py-3 text-sm font-medium rounded-lg transition-colors",
-        variant === "primary" && "bg-black text-white hover:bg-gray-800",
-        variant === "secondary" && "border border-gray-300 text-gray-700 hover:bg-gray-50 hover:border-gray-400",
+        "inline-flex items-center justify-center gap-2 px-6 py-3 text-sm font-semibold rounded-[10px] transition-all duration-300",
+        variant === "primary" &&
+          "bg-gradient-to-r from-accent to-[#8B5CF6] text-white shadow-[0_4px_20px_rgba(108,92,231,0.3)] hover:shadow-[0_4px_30px_rgba(108,92,231,0.5)] hover:-translate-y-0.5",
+        variant === "ghost" &&
+          "border border-border text-text hover:border-accent hover:text-accent-l hover:bg-accent-bg",
         className
       )}
     >

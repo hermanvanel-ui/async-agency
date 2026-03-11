@@ -2,13 +2,14 @@ import type { Metadata } from "next";
 import { Section } from "@/components/ui/Section";
 import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
-import { DiagramBlock } from "@/components/sections/DiagramBlock";
+import { SectionLabel } from "@/components/ui/SectionLabel";
+import { FadeUp, StaggerContainer, StaggerItem } from "@/components/ui/Motion";
 import { siteContent } from "@/data/siteContent";
 
 export const metadata: Metadata = {
   title: "Technologie",
   description:
-    "Comprendre nos technologies : agents IA, workflows automatises, stack technique et securite. Explique simplement.",
+    "Comprendre nos technologies : agents IA, workflows automatisés, stack technique et sécurité.",
 };
 
 export default function TechnologyPage() {
@@ -20,167 +21,150 @@ export default function TechnologyPage() {
       {/* Header */}
       <Section>
         <div className="text-center max-w-3xl mx-auto">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            Technologie
-          </h1>
-          <p className="text-lg text-gray-500 leading-relaxed">
-            Comment ca marche, explique simplement.
-            Pas de jargon inutile, juste les concepts qui comptent.
-          </p>
+          <FadeUp><SectionLabel>Under the hood</SectionLabel></FadeUp>
+          <FadeUp delay={0.1}>
+            <h1 className="text-[clamp(2rem,4vw,3rem)] font-bold tracking-tight mb-4">
+              Technologie
+            </h1>
+          </FadeUp>
+          <FadeUp delay={0.2}>
+            <p className="text-lg text-text-dim leading-relaxed">
+              Comment ça marche, expliqué simplement. Pas de jargon inutile, juste les concepts qui comptent.
+            </p>
+          </FadeUp>
         </div>
       </Section>
 
-      {/* Agent Explanation */}
-      <Section gray>
-        <div className="max-w-4xl mx-auto">
-          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
-            {agentExplanation.title}
-          </h2>
-          <p className="text-gray-500 leading-relaxed mb-8">
-            {agentExplanation.definition}
-          </p>
+      {/* Agent IA */}
+      <Section>
+        <div className="max-w-[900px] mx-auto">
+          <FadeUp><SectionLabel>Concept clé</SectionLabel></FadeUp>
+          <FadeUp delay={0.1}>
+            <h2 className="text-[clamp(1.5rem,3vw,2rem)] font-bold tracking-tight mb-4">
+              {agentExplanation.title}
+            </h2>
+          </FadeUp>
+          <FadeUp delay={0.2}>
+            <p className="text-text-dim leading-relaxed mb-8 max-w-[600px]">
+              {agentExplanation.definition}
+            </p>
+          </FadeUp>
 
-          {/* Example */}
-          <Card className="mb-8">
-            <h3 className="text-sm font-semibold text-gray-400 uppercase tracking-wide mb-4">
-              Exemple concret : {agentExplanation.example.name}
-            </h3>
-            <div className="space-y-3">
-              {agentExplanation.example.steps.map((step, i) => (
-                <div key={i} className="flex items-start gap-3">
-                  <span className="w-6 h-6 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center text-xs font-bold shrink-0">
-                    {i + 1}
-                  </span>
-                  <span className="text-sm text-gray-600 pt-0.5">{step}</span>
-                </div>
-              ))}
-            </div>
-          </Card>
+          {/* Example flow */}
+          <FadeUp delay={0.3}>
+            <Card className="mb-8">
+              <p className="font-mono text-[0.65rem] font-bold text-text-muted tracking-widest uppercase mb-5">
+                Exemple : {agentExplanation.example.name}
+              </p>
+              <div className="flex flex-wrap items-center justify-center gap-2">
+                {agentExplanation.example.steps.map((step, i) => (
+                  <div key={i} className="contents">
+                    <div className="flex items-center gap-2 px-3 py-2 rounded-[10px] bg-bg-hover border border-border text-sm font-medium">
+                      <span className="w-6 h-6 rounded-md bg-accent-bg text-accent-l flex items-center justify-center font-mono text-xs font-bold">
+                        {i + 1}
+                      </span>
+                      <span className="text-text">{step}</span>
+                    </div>
+                    {i < agentExplanation.example.steps.length - 1 && (
+                      <span className="text-text-muted text-xs hidden sm:block">→</span>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </Card>
+          </FadeUp>
 
           {/* Comparison */}
-          <div className="grid md:grid-cols-2 gap-6">
-            <Card>
-              <h3 className="text-sm font-semibold text-green-700 mb-3 flex items-center gap-2">
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                </svg>
-                Avantages vs. humain
-              </h3>
-              <ul className="space-y-2">
+          <StaggerContainer className="grid md:grid-cols-2 gap-5">
+            <StaggerItem>
+              <Card className="border-l-[3px] border-l-green">
+                <h3 className="text-sm font-bold text-green mb-4 flex items-center gap-2">
+                  ✓ Avantages vs. humain
+                </h3>
                 {agentExplanation.comparison.advantages.map((a, i) => (
-                  <li key={i} className="flex items-center gap-2 text-sm text-gray-600">
-                    <Badge variant="green">&check;</Badge>
+                  <p key={i} className="flex items-center gap-2 text-sm text-text-dim py-1.5">
+                    <Badge variant="green">✓</Badge>
                     {a}
-                  </li>
+                  </p>
                 ))}
-              </ul>
-            </Card>
-            <Card>
-              <h3 className="text-sm font-semibold text-gray-500 mb-3 flex items-center gap-2">
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-                Limites a connaitre
-              </h3>
-              <ul className="space-y-2">
+              </Card>
+            </StaggerItem>
+            <StaggerItem>
+              <Card className="border-l-[3px] border-l-text-muted">
+                <h3 className="text-sm font-bold text-text-dim mb-4 flex items-center gap-2">
+                  ⓘ Limites à connaître
+                </h3>
                 {agentExplanation.comparison.limitations.map((l, i) => (
-                  <li key={i} className="flex items-center gap-2 text-sm text-gray-600">
-                    <Badge>&times;</Badge>
+                  <p key={i} className="flex items-center gap-2 text-sm text-text-dim py-1.5">
+                    <span className="text-text-muted text-xs">✕</span>
                     {l}
-                  </li>
+                  </p>
                 ))}
-              </ul>
-            </Card>
-          </div>
-        </div>
-      </Section>
-
-      {/* Workflow Explanation */}
-      <Section>
-        <div className="max-w-4xl mx-auto">
-          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
-            {workflowExplanation.title}
-          </h2>
-          <p className="text-gray-500 leading-relaxed mb-8">
-            {workflowExplanation.definition}
-          </p>
-
-          <Card>
-            <h3 className="text-sm font-semibold text-gray-400 uppercase tracking-wide mb-4 text-center">
-              Exemple : {workflowExplanation.example.name}
-            </h3>
-            <DiagramBlock
-              steps={workflowExplanation.example.steps.map((s) => ({
-                label: s.step,
-                detail: s.detail,
-                type:
-                  s.step === "Trigger"
-                    ? "input"
-                    : s.step === "Condition"
-                      ? "condition"
-                      : s.step.includes("Log")
-                        ? "output"
-                        : "workflow",
-              }))}
-            />
-          </Card>
+              </Card>
+            </StaggerItem>
+          </StaggerContainer>
         </div>
       </Section>
 
       {/* Stack */}
-      <Section gray>
-        <div className="max-w-4xl mx-auto">
+      <Section>
+        <div className="max-w-[900px] mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3">
-              Stack technique
-            </h2>
-            <p className="text-gray-500">
-              Les outils que nous utilisons, et pourquoi.
-            </p>
+            <FadeUp><SectionLabel>Outils</SectionLabel></FadeUp>
+            <FadeUp delay={0.1}>
+              <h2 className="text-[clamp(1.5rem,3vw,2rem)] font-bold tracking-tight">
+                Stack technique
+              </h2>
+              <p className="text-text-dim mt-2">Les outils que nous utilisons, et pourquoi.</p>
+            </FadeUp>
           </div>
-
-          <div className="grid sm:grid-cols-2 gap-4">
+          <StaggerContainer className="grid sm:grid-cols-2 gap-4">
             {stack.map((item) => (
-              <Card key={item.category}>
-                <h3 className="text-base font-semibold text-gray-900 mb-1">
-                  {item.category}
-                </h3>
-                <p className="text-xs text-gray-400 mb-3">{item.description}</p>
-                <div className="flex flex-wrap gap-2">
-                  {item.tools.map((tool) => (
-                    <Badge key={tool}>{tool}</Badge>
-                  ))}
-                </div>
-              </Card>
+              <StaggerItem key={item.category}>
+                <Card>
+                  <h3 className="font-bold tracking-tight mb-1">{item.category}</h3>
+                  <p className="text-xs text-text-muted mb-3">{item.description}</p>
+                  <div className="flex flex-wrap gap-2">
+                    {item.tools.map((tool) => (
+                      <span
+                        key={tool}
+                        className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-sm font-medium bg-bg-hover border border-border text-text"
+                      >
+                        {tool}
+                      </span>
+                    ))}
+                  </div>
+                </Card>
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerContainer>
         </div>
       </Section>
 
       {/* Security */}
       <Section>
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-[900px] mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3">
-              Securite & Conformite
-            </h2>
-            <p className="text-gray-500">
-              La fiabilite n&apos;est pas optionnelle. Voici nos engagements.
-            </p>
+            <FadeUp><SectionLabel>Sécurité</SectionLabel></FadeUp>
+            <FadeUp delay={0.1}>
+              <h2 className="text-[clamp(1.5rem,3vw,2rem)] font-bold tracking-tight">
+                Sécurité & Conformité
+              </h2>
+              <p className="text-text-dim mt-2">La fiabilité n&apos;est pas optionnelle.</p>
+            </FadeUp>
           </div>
-
-          <Card>
-            <div className="grid sm:grid-cols-2 gap-4">
-              {security.map((item, i) => (
-                <div key={i} className="flex items-start gap-3">
-                  <svg className="w-5 h-5 text-green-500 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                  </svg>
-                  <span className="text-sm text-gray-600">{item}</span>
-                </div>
-              ))}
-            </div>
-          </Card>
+          <FadeUp delay={0.2}>
+            <Card>
+              <div className="grid sm:grid-cols-2 gap-1">
+                {security.map((item, i) => (
+                  <div key={i} className="flex items-start gap-3 py-2">
+                    <span className="text-sm mt-0.5">🛡️</span>
+                    <span className="text-sm text-text-dim">{item}</span>
+                  </div>
+                ))}
+              </div>
+            </Card>
+          </FadeUp>
         </div>
       </Section>
     </>

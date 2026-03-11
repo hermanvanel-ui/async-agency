@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { motion, AnimatePresence } from "framer-motion";
 import { siteContent } from "@/data/siteContent";
 import { cn } from "@/lib/utils";
 
@@ -11,15 +12,18 @@ export function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-200">
-      <nav className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+    <header className="sticky top-0 z-50 bg-bg/85 backdrop-blur-xl border-b border-border">
+      <nav className="max-w-[1200px] mx-auto px-6 h-16 flex items-center justify-between">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2 shrink-0">
-          <div className="w-8 h-8 rounded-lg bg-black flex items-center justify-center text-white text-xs font-bold">
+        <Link href="/" className="flex items-center gap-2.5 shrink-0">
+          <div className="w-9 h-9 rounded-[10px] bg-gradient-to-br from-accent to-cyan flex items-center justify-center text-white text-xs font-bold font-mono shadow-[0_0_20px_rgba(108,92,231,0.3)]">
             a.
           </div>
-          <span className="font-semibold text-gray-900 hidden sm:block">
+          <span className="font-semibold text-text hidden sm:block tracking-tight">
             Async Agency
+          </span>
+          <span className="text-text-muted text-[0.65rem] font-mono hidden lg:block">
+            // systems
           </span>
         </Link>
 
@@ -30,10 +34,10 @@ export function Navbar() {
               key={item.href}
               href={item.href}
               className={cn(
-                "px-3 py-2 text-sm rounded-lg transition-colors",
+                "px-3 py-2 text-[0.8rem] font-medium rounded-lg transition-all duration-200",
                 pathname === item.href
-                  ? "text-black font-medium bg-gray-100"
-                  : "text-gray-500 hover:text-gray-900 hover:bg-gray-50"
+                  ? "text-accent-l bg-accent-bg"
+                  : "text-text-dim hover:text-text hover:bg-bg-hover"
               )}
             >
               {item.label}
@@ -44,9 +48,9 @@ export function Navbar() {
         {/* CTA desktop */}
         <Link
           href="/services"
-          className="hidden md:inline-flex px-4 py-2 text-sm font-medium rounded-lg bg-black text-white hover:bg-gray-800 transition-colors"
+          className="hidden md:inline-flex px-5 py-2 text-[0.8rem] font-semibold rounded-lg bg-gradient-to-r from-accent to-[#8B5CF6] text-white shadow-[0_0_20px_rgba(108,92,231,0.2)] hover:shadow-[0_0_30px_rgba(108,92,231,0.4)] transition-all duration-300 hover:-translate-y-0.5"
         >
-          Nous contacter
+          Nous contacter →
         </Link>
 
         {/* Burger mobile */}
@@ -57,19 +61,19 @@ export function Navbar() {
         >
           <span
             className={cn(
-              "w-5 h-0.5 bg-gray-900 block transition-transform",
+              "w-5 h-0.5 bg-text block transition-transform duration-200",
               mobileOpen && "translate-y-[4px] rotate-45"
             )}
           />
           <span
             className={cn(
-              "w-5 h-0.5 bg-gray-900 block transition-opacity",
+              "w-5 h-0.5 bg-text block transition-opacity duration-200",
               mobileOpen && "opacity-0"
             )}
           />
           <span
             className={cn(
-              "w-5 h-0.5 bg-gray-900 block transition-transform",
+              "w-5 h-0.5 bg-text block transition-transform duration-200",
               mobileOpen && "-translate-y-[4px] -rotate-45"
             )}
           />
@@ -77,34 +81,41 @@ export function Navbar() {
       </nav>
 
       {/* Mobile menu */}
-      {mobileOpen && (
-        <div className="md:hidden bg-white border-t border-gray-100 px-6 py-4">
-          <div className="flex flex-col gap-1">
-            {siteContent.nav.map((item) => (
+      <AnimatePresence>
+        {mobileOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            className="md:hidden bg-bg-card border-t border-border overflow-hidden"
+          >
+            <div className="px-6 py-4 flex flex-col gap-1">
+              {siteContent.nav.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  onClick={() => setMobileOpen(false)}
+                  className={cn(
+                    "px-3 py-2.5 text-sm rounded-lg transition-colors",
+                    pathname === item.href
+                      ? "text-accent-l bg-accent-bg"
+                      : "text-text-dim hover:text-text"
+                  )}
+                >
+                  {item.label}
+                </Link>
+              ))}
               <Link
-                key={item.href}
-                href={item.href}
+                href="/services"
                 onClick={() => setMobileOpen(false)}
-                className={cn(
-                  "px-3 py-2.5 text-sm rounded-lg transition-colors",
-                  pathname === item.href
-                    ? "text-black font-medium bg-gray-100"
-                    : "text-gray-500 hover:text-gray-900"
-                )}
+                className="mt-2 px-4 py-2.5 text-sm font-semibold rounded-lg bg-gradient-to-r from-accent to-[#8B5CF6] text-white text-center"
               >
-                {item.label}
+                Nous contacter →
               </Link>
-            ))}
-            <Link
-              href="/services"
-              onClick={() => setMobileOpen(false)}
-              className="mt-2 px-4 py-2.5 text-sm font-medium rounded-lg bg-black text-white text-center"
-            >
-              Nous contacter
-            </Link>
-          </div>
-        </div>
-      )}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   );
 }
